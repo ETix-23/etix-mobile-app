@@ -2,17 +2,19 @@ import { View, Text, SafeAreaView, Image, FlatList } from "react-native";
 import React from "react";
 import { busData } from "@/constants/BusData";
 import BusCard from "@/components/cards/BusCard";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { formatDate } from "@/utils/formatDateTime";
 
-const Search = () => {
+const SearchResults = () => {
   const params = useLocalSearchParams();
   const formattedDate = formatDate(Number(params.date));
-
+  if (!params.from || !params.to) {
+    router.push("/search/");
+  }
   return (
     <SafeAreaView className="flex-1 p-2">
       <View className="items-center">
-        <Image source={require("../../assets/images/icons/etix.png")} style={{ width: 150, height: 120, marginTop: -100 }} />
+        <Image source={require("../../../assets/images/icons/etix.png")} style={{ width: 150, height: 120, marginTop: -100 }} />
         <View className="w-full py-3">
           <View className="flex-row gap-3">
             <View className="bg-white flex-1 p-4 rounded-2xl space-y-2">
@@ -20,7 +22,7 @@ const Search = () => {
               <Text className="capitalize">{params.from}</Text>
             </View>
             <View className="bg-white flex-1 p-4 rounded-2xl space-y-2">
-              <Text className="text-[#ccc]">From</Text>
+              <Text className="text-[#ccc]">To</Text>
               <Text className="capitalize">{params.to}</Text>
             </View>
           </View>
@@ -49,4 +51,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchResults;

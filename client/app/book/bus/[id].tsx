@@ -1,7 +1,7 @@
 import { busData } from "@/constants/BusData";
 import { Bus } from "@/constants/types";
 import { formatDate } from "@/utils/formatDateTime";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Feather, FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -77,9 +77,16 @@ const BookBus = () => {
             <Text className="text-[#a3a3a3] font-semibold">1 * {1500} RWF</Text>
             <Text className="text-[#403F3F] font-semibold text-xl">{Number(params.numberOfSeats) * 1500} RWF</Text>
           </View>
-          <TouchableOpacity className="text-sm bg-[#51259B] justify-center py-4 px-3 rounded-lg">
-            <Text className="text-white text-center uppercase">Book Now</Text>
-          </TouchableOpacity>
+          <Link
+            href={{
+              pathname: "/book/completeBooking",
+              params: { ...params },
+            }}
+            asChild>
+            <TouchableOpacity className="text-sm bg-[#51259B] justify-center py-4 px-3 rounded-lg">
+              <Text className="text-white text-center uppercase">Book Now</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </SafeAreaView>

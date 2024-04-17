@@ -1,12 +1,13 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import React from "react";
 
-import { Tabs } from "expo-router";
+import { Tabs, router } from "expo-router";
 
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
-import ScreenHeaderBtn from "@/components/header/HeaderBackBtn";
+import { Feather } from "@expo/vector-icons";
+import { Platform, Text, View } from "react-native";
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof AntDesign>["name"]; color: string }) {
   return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -21,17 +22,25 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: useClientOnlyValue(false, true),
         tabBarStyle: {
-          height: 60,
+          height: 64,
           elevation: 10,
         },
+        tabBarShowLabel: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           tabBarActiveTintColor: "#51259B",
           headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <TabBarIcon name="home" color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Home</Text>
+              </View>
+            );
+          },
         }}
       />
       <Tabs.Screen
@@ -39,30 +48,83 @@ export default function TabLayout() {
         options={{
           title: "Search",
           tabBarActiveTintColor: "#51259B",
-          tabBarIcon: ({ color }) => <TabBarIcon name="search1" color={color} />,
-          headerShown: true,
-          headerLeft: () => <ScreenHeaderBtn />,
-          headerStyle: {
-            backgroundColor: "transparent",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <TabBarIcon name="search1" color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Search</Text>
+              </View>
+            );
           },
-          headerShadowVisible: false,
-          headerTitle: "",
         }}
       />
       <Tabs.Screen
-        name="map"
+        name="tickets"
         options={{
-          title: "Map",
+          title: "Tickets",
+          headerTitle: "Your Tickets",
+          headerTintColor: "#51259B",
           tabBarActiveTintColor: "#51259B",
-          tabBarIcon: ({ color }) => <TabBarIcon name="bars" color={color} />,
+          headerTitleAlign: "center",
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#51259B",
+                    width: Platform.OS == "ios" ? 50 : 60,
+                    height: Platform.OS == "ios" ? 50 : 60,
+                    top: Platform.OS == "ios" ? -25 : -35,
+                    borderRadius: Platform.OS == "ios" ? 25 : 30,
+                  }}>
+                  <TabBarIcon name="bars" color="#fff" />
+                </View>
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: -25 }}>Tickets</Text>
+              </View>
+            );
+          },
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
+          headerTitle: "Your Information",
+          headerTintColor: "#51259B",
           tabBarActiveTintColor: "#51259B",
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          headerTitleAlign: "center",
+          headerRight: () => <Feather onPress={() => router.push("/emergency")} name="info" size={24} color="#51259B" />,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <TabBarIcon name="user" color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Profile</Text>
+              </View>
+            );
+          },
+        }}
+      />
+
+      <Tabs.Screen
+        name="settings"
+        options={{
+          headerTitle: "Settings",
+          headerTintColor: "#51259B",
+          tabBarShowLabel: false,
+          headerTitleAlign: "center",
+          tabBarActiveTintColor: "#51259B",
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <Feather name="settings" size={24} color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Settings</Text>
+              </View>
+            );
+          },
         }}
       />
     </Tabs>

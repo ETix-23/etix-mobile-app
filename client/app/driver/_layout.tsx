@@ -1,13 +1,16 @@
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import React from "react";
 
 import { Tabs, router } from "expo-router";
 
+import DriverProfileButton from "@/components/header/DriverProfileButton";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
-import { Feather } from "@expo/vector-icons";
-import { Platform, Text, View } from "react-native";
+import { Feather, FontAwesome } from "@expo/vector-icons";
+import { Image, Text, View } from "react-native";
+import ScreenHeaderBtn from "@/components/header/HeaderBackBtn";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof AntDesign>["name"]; color: string }) {
   return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -33,8 +36,9 @@ export default function TabLayout() {
           title: "Home",
           tabBarActiveTintColor: "#51259B",
           headerShown: true,
-          headerTintColor: "#51259B",
-          headerTitleAlign: "center",
+          headerTitle: "",
+          headerRight: () => <DriverProfileButton />,
+          headerLeft: () => <Image source={require("../../assets/images/icons/etix.png")} style={{ width: 100, height: 80 }} />,
           tabBarIcon: ({ focused }) => {
             return (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -46,45 +50,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="schedules"
         options={{
-          title: "Search",
+          title: "Schedules",
           tabBarActiveTintColor: "#51259B",
-          headerShown: false,
-          tabBarIcon: ({ focused }) => {
-            return (
-              <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <TabBarIcon name="search1" color={focused ? "#51259B" : "#7C7575"} />
-                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Search</Text>
-              </View>
-            );
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="tickets"
-        options={{
-          title: "Tickets",
-          headerTitle: "Your Tickets",
+          headerShown: true,
           headerTintColor: "#51259B",
-          tabBarActiveTintColor: "#51259B",
           headerTitleAlign: "center",
+          headerLeft: () => <ScreenHeaderBtn />,
           tabBarIcon: ({ focused }) => {
             return (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#51259B",
-                    width: Platform.OS == "ios" ? 50 : 60,
-                    height: Platform.OS == "ios" ? 50 : 60,
-                    top: Platform.OS == "ios" ? -25 : -35,
-                    borderRadius: Platform.OS == "ios" ? 25 : 30,
-                  }}>
-                  <TabBarIcon name="bars" color="#fff" />
-                </View>
-                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: -25 }}>Tickets</Text>
+                <FontAwesome name="bus" size={24} color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Schedules</Text>
               </View>
             );
           },
@@ -112,18 +90,19 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="settings"
+        name="emergency"
         options={{
-          headerTitle: "Settings",
+          headerTitle: "Emergency Assistance",
           headerTintColor: "#51259B",
           tabBarShowLabel: false,
           headerTitleAlign: "center",
           tabBarActiveTintColor: "#51259B",
+          headerLeft: () => <ScreenHeaderBtn />,
           tabBarIcon: ({ focused }) => {
             return (
               <View style={{ alignItems: "center", justifyContent: "center" }}>
-                <Feather name="settings" size={24} color={focused ? "#51259B" : "#7C7575"} />
-                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Settings</Text>
+                <MaterialCommunityIcons name="alert-decagram-outline" size={26} color={focused ? "#51259B" : "#7C7575"} />
+                <Text style={{ fontSize: 12, color: focused ? "#51259B" : "#7C7575", marginTop: 6 }}>Emergency</Text>
               </View>
             );
           },

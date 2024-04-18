@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { NativeWindStyleSheet } from "nativewind";
+import Toast from "react-native-toast-message";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -46,7 +47,12 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <>
+      <RootLayoutNav />
+      <Toast />
+    </>
+  );
 }
 
 function RootLayoutNav() {
@@ -58,6 +64,7 @@ function RootLayoutNav() {
       <Stack.Screen name="(site)" options={{ headerShown: false }} />
       <Stack.Screen name="(main)" options={{ headerShown: false }} />
       <Stack.Screen name="book" options={{ headerShown: false }} />
+      <Stack.Screen name="driver" options={{ headerShown: false }} />
       <Stack.Screen name="emergency" options={{ headerShown: false, presentation: "modal" }} />
       {/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
     </Stack>

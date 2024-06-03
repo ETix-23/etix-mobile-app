@@ -89,12 +89,13 @@ async function getRouteById(req, res) {
   }
 }
 
+
 async function searchRoutesByQuery(req, res) {
   const { origin, destination } = req.query;
   try {
     let query = {};
-    if (origin) query.origin = origin;
-    if (destination) query.destination = destination;
+    if (origin) query.origin = { $regex: new RegExp(origin, 'i') }; // Case insensitive search
+    if (destination) query.destination = { $regex: new RegExp(destination, 'i') }; // Case insensitive search
     const routes = await Route.find(query);
     res.status(200).json({ routes });
   } catch (error) {
@@ -102,6 +103,7 @@ async function searchRoutesByQuery(req, res) {
     console.log(error);
   }
 }
+
 
 module.exports = {
   addRoute,

@@ -1,31 +1,22 @@
 const express = require("express");
-
-const {getAllTickets,
-    updateTicket,
-    addTicket,
-    searchTickets,
-    bookTicket} = require("../controllers/ticketsController")
-
+const {
+  publishTickets,
+  bookTicket,
+  getTicketsByRoute,
+} = require("../controller/ticketController");
+const { checkAuth,authorizeRoles } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
+router.use(checkAuth)
 
-router.get("/",getAllTickets)
-router.post("/new",addTicket)
-router.put("/update/:id",updateTicket)
-router.get("/search",searchTickets)
-router.post("/book", async (req, res) => {
-    try {
-        const { ticketData, numberOfTickets } = req.body;
-        // Parse numberOfTickets to an integer
-        const parsedNumberOfTickets = parseInt(numberOfTickets);
-        if (isNaN(parsedNumberOfTickets) || parsedNumberOfTickets <= 0) {
-            throw new Error("Invalid numberOfTickets value");
-        }
-        const bookedTickets = await bookTicket(ticketData, parsedNumberOfTickets);
-        res.status(201).json({ bookedTickets });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
+const ROLES = {
+  ADMIN: "admin",
+  DRIVER: "driver",
+  CLIENT: "client",
+};
+
+router.post("/publish", publishTickets);
+router.post("/book", bookTicket);
+router.get("/:routeId", getTicketsByRoute);
 
 module.exports = router;

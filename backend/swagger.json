@@ -167,7 +167,7 @@
                         "description": "Invalid ID supplied"
                     },
                     "404": {
-                        "description": "Course not found"
+                        "description": "Route not found"
                     }
                 }
             }
@@ -245,7 +245,7 @@
                     {
                         "name": "email",
                         "in": "path",
-                        "description": "email of course to return",
+                        "description": "email of user to return",
                         "required": true,
                         "type": "string"
                     }

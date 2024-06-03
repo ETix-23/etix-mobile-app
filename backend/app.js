@@ -7,14 +7,18 @@ const transportRoutes = require("./routes/route");
 const companyRoutes = require("./routes/companyRoutes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
+const cors= require('cors')
+const { authorizeRoles } = require("./middlewares/authMiddleware");
+
 // const {authorizeRoles}= require("./middlewares/authMiddleware")
 
 const app = express();
 dotenv.config();
+app.use(cors())
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-mongoose.connect(process.env.DB_URI).then(() => {
+mongoose.connect(process.env.MONGODB_URI).then(() => {
   console.log("connected to db");
   app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`);
@@ -41,4 +45,4 @@ const ROLES = {
 app.use("/api/users", authRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/routes", transportRoutes);
-app.use("/api/companies", companyRoutes);
+app.use("/api/companies",authorizeRoles(ROLES.ENTITY_MANAGER), companyRoutes);

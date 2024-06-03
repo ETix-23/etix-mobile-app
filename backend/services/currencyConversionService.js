@@ -5,7 +5,7 @@ const BASE_URL = 'https://api.exchangerate-api.com/v4/latest/';
 
 async function convert(amount, toCurrency) {
   try {
-    const response = await axios.get(`${BASE_URL}USD`, { params: { apiKey: API_KEY } });
+    const response = await axios.get(`${BASE_URL}RWF`, { params: { apiKey: API_KEY } });
     const rates = response.data.rates;
     const rate = rates[toCurrency];
     if (!rate) {

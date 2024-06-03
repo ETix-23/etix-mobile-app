@@ -1,6 +1,6 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { busData } from "@/constants/BusData";
 import { Bus } from "@/constants/types";
 import { Entypo } from "@expo/vector-icons";
@@ -37,10 +37,14 @@ const SelectPayment = () => {
             <View className="bg-white p-7 rounded-3xl space-y-4">
               <View className="flex-row justify-between items-center pb-2">
                 <Text className="font-semibold text-lg text-[#6C6A6A]">Mobile Money</Text>
-                <View className="flex-row items-center gap-x-1">
+                <Link
+                  href={{
+                    pathname: "/book/payment/completePayment",
+                    params: { ...params },
+                  }}>
                   <Text className="text-[#51259B] uppercase">Select</Text>
                   <Entypo name="chevron-small-right" size={22} color="#51259B" />
-                </View>
+                </Link>
               </View>
               <View className="border-t border-[#A39D9D] pt-4">
                 <Text className="text-lg">*182*3*2*097267#</Text>
@@ -50,10 +54,14 @@ const SelectPayment = () => {
           <View className="bg-white p-6 rounded-3xl space-y-4">
             <View className="flex-row justify-between items-center pb-2">
               <Text className="font-semibold text-lg text-[#6C6A6A]">Credit Card </Text>
-              <View className="flex-row items-center gap-x-1">
+              <Link
+                href={{
+                  pathname: "/book/payment/completePayment",
+                  params: { ...params },
+                }}>
                 <Text className="text-[#51259B] uppercase">Select</Text>
                 <Entypo name="chevron-small-right" size={22} color="#51259B" />
-              </View>
+              </Link>
             </View>
             <View className="border-t border-[#A39D9D] pt-4 flex-row items-center space-x-3">
               <Image source={require("../../../assets/images/mastercard.png")} />
@@ -64,10 +72,14 @@ const SelectPayment = () => {
           <View className="bg-white p-6 rounded-3xl space-y-4">
             <View className="flex-row justify-between items-center pb-2">
               <Text className="font-semibold text-lg text-[#6C6A6A]">Bank Transfer </Text>
-              <View className="flex-row items-center gap-x-1">
+              <Link
+                href={{
+                  pathname: "/book/payment/completePayment",
+                  params: { ...params },
+                }}>
                 <Text className="text-[#51259B] uppercase">Select</Text>
                 <Entypo name="chevron-small-right" size={22} color="#51259B" />
-              </View>
+              </Link>
             </View>
             <View className="border-t border-[#A39D9D] pt-4 flex-row items-center space-x-3">
               <Image source={require("../../../assets/images/google-wallet.png")} />

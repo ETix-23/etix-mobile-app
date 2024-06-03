@@ -7,7 +7,7 @@ export const busData: Array<Bus> = [
     busStops: [
       {
         arrivalTime: "06:30AM",
-        name: "Nyanza",
+        name: "Kigali",
       },
       {
         arrivalTime: "08:30AM",
@@ -21,11 +21,11 @@ export const busData: Array<Bus> = [
     numberPlate: "RG123",
     busStops: [
       {
-        arrivalTime: "06:30AM",
-        name: "Nyanza",
+        arrivalTime: "08:30AM",
+        name: "Kigali",
       },
       {
-        arrivalTime: "08:30AM",
+        arrivalTime: "10:30AM",
         name: "Nyanza",
       },
     ],
@@ -36,11 +36,11 @@ export const busData: Array<Bus> = [
     numberPlate: "AF113",
     busStops: [
       {
-        arrivalTime: "06:30AM",
-        name: "Nyanza",
+        arrivalTime: "10:00AM",
+        name: "Kigali",
       },
       {
-        arrivalTime: "08:30AM",
+        arrivalTime: "11:30AM",
         name: "Nyanza",
       },
     ],
@@ -52,7 +52,7 @@ export const busData: Array<Bus> = [
     busStops: [
       {
         arrivalTime: "06:30AM",
-        name: "Nyanza",
+        name: "Kigali",
       },
       {
         arrivalTime: "08:30AM",

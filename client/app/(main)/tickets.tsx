@@ -1,9 +1,38 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { Link } from "expo-router";
+import axios from "axios";
+import Toast from "react-native-toast-message";
 
 const Tickets = () => {
+  // const [tickets, setTickets] = useState(null);
+  // const fetchTickets = () => {
+  //   axios
+  //     .post("http://10.0.2.2:7000/api/tickets/new", {})
+  //     .then((response) => {
+  //       if (response.data) {
+  //         return setTickets(response.data);
+  //       } else {
+  //         Toast.show({
+  //           type: "error",
+  //           text1: "Something went wrong",
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Something went wrong",
+  //       });
+  //     });
+  // };
+  // useEffect(() => {
+  //   fetchTickets();
+  // }, []);
+  // console.log(tickets);
+  
   return (
     <View className="flex-1 justify-center items-center bg-white">
       <View className="space-y-4">

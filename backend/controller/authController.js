@@ -10,8 +10,7 @@ const register = async (req, res) => {
   try {
     const { name, phoneNumber, email, password } = req.body;
 
-    if (!name || !phoneNumber || !email || !password)
-      return res.status(400).json({ error: "Please fill all the fields" });
+    if (!name.trim() || !phoneNumber.trim() || !email.trim() || !password) return res.status(400).json({ error: "Please fill all the fields" });
 
     const exists = await User.findOne({ email });
 
@@ -37,6 +36,8 @@ const register = async (req, res) => {
 const signIn = async (req, res) => {
   const { email, password } = req.body;
   try {
+    if (!email.trim() || !password) return res.status(400).json({ error: "Please fill all the fields" });
+
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -69,16 +70,15 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserByEmail = async (req,res)=>{
-  const {email}= req.params
+const getUserByEmail = async (req, res) => {
+  const { email } = req.params;
   try {
-    
-    const user= await User.findOne({email})
-    res.status(200).json({user})
+    const user = await User.findOne({ email });
+    res.status(200).json({ user });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-}
+};
 
 const updateUserProfile = async (req, res) => {
   const { id } = req.params;

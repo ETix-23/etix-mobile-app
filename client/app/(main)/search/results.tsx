@@ -42,7 +42,7 @@ const SearchResults = () => {
             data={busData}
             renderItem={({ item }) => <BusCard busData={item} params={params} />}
             contentContainerStyle={{ rowGap: 16, marginTop: 5, width: "100%" }}
-            // keyExtractor={(item) => item.numberPlate}
+            keyExtractor={(item) => item.numberPlate}
             showsVerticalScrollIndicator={false}
           />
         </View>

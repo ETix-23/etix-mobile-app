@@ -1,11 +1,9 @@
-import { View, Text, SafeAreaView, Image, TouchableOpacity, TextInput, Alert } from "react-native";
-import React, { useState, useTransition } from "react";
-import { Stack, router } from "expo-router";
-import ScreenHeaderBtn from "@/components/header/HeaderBackBtn";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { Foundation } from "@expo/vector-icons";
+import API_BASE_URL from "@/api/endpoint";
+import { Feather, Foundation, MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
+import { Stack, router } from "expo-router";
+import { useState } from "react";
+import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function Register() {
@@ -14,39 +12,62 @@ export default function Register() {
     setShowPassword(!showPassword);
   };
 
-  const [fullName, setFullName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    names: "",
+    phoneNumber: "",
+    email: "",
+    password: "",
+  });
 
   const [isPending, setIsPending] = useState(false);
+
+  const handleInputChange = (name: string, value: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   const handleSignUp = async () => {
     setIsPending(true);
     try {
-      // Make a POST request to the API endpoint
-      const response = await axios.post("http://10.0.2.2:7000/api/users/signup", {
-        fullName: fullName,
-        phoneNumber: phoneNumber,
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(API_BASE_URL + "/api/users/signup", formData);
 
-      // Handle successful response
-      console.log("Response:", response.data);
       Toast.show({
         type: "success",
         text1: "Your account has been created successfully",
       });
+
       setTimeout(() => {
         router.push("/(main)/");
       }, 1000);
-    } catch (error) {
-      // Handle errors
-      Toast.show({
-        type: "error",
-        text1: "There has been an error creating your account!",
-      });
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log("Backend error:", error.response.data);
+        Toast.show({
+          type: "error",
+          text1: "There has been an error creating your account!",
+          text2: error.response.data.error || "Unknown error",
+        });
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log("Network error:", error.request);
+        Toast.show({
+          type: "error",
+          text1: "Network error",
+          text2: "Please check your internet connection and try again.",
+        });
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error:", error.message);
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: error.message,
+        });
+      }
     } finally {
       setIsPending(false);
     }
@@ -70,7 +91,7 @@ export default function Register() {
             <Text>Full name</Text>
             <View className="flex-row space-x-3 items-center border border-[#51259B] rounded-full w-full h-[60px] bg-[#FFFAFA] px-5">
               <Feather name="user" size={24} color="#aaa" />
-              <TextInput onChangeText={(value) => setFullName(value)} className="w-full flex-1" placeholder="Enter your full names" />
+              <TextInput onChangeText={(value) => handleInputChange("name", value)} className="w-full flex-1" placeholder="Enter your full names" />
             </View>
           </View>
           <View className="space-y-2 w-full flex-col justify-center">
@@ -78,7 +99,7 @@ export default function Register() {
             <View className="flex-row space-x-3 items-center border border-[#51259B] rounded-full w-full h-[60px] bg-[#FFFAFA] px-5">
               <MaterialCommunityIcons name="phone" size={24} color="#aaa" />
               <TextInput
-                onChangeText={(value) => setPhoneNumber(value)}
+                onChangeText={(value) => handleInputChange("phoneNumber", value)}
                 keyboardType="numeric"
                 className="w-full flex-1"
                 placeholder="Enter your phone number"
@@ -89,7 +110,7 @@ export default function Register() {
             <Text>Email</Text>
             <View className="flex-row space-x-3 items-center border border-[#51259B] rounded-full w-full h-[60px] bg-[#FFFAFA] px-5">
               <MaterialCommunityIcons name="email-outline" size={24} color="#aaa" />
-              <TextInput onChangeText={(value) => setEmail(value)} className="w-full flex-1" placeholder="Enter your email address" />
+              <TextInput onChangeText={(value) => handleInputChange("email", value)} className="w-full flex-1" placeholder="Enter your email address" />
             </View>
           </View>
           <View className="space-y-2 w-full flex-col justify-center pb-4">
@@ -97,7 +118,7 @@ export default function Register() {
             <View className="flex-row space-x-3 items-center border border-[#51259B] rounded-full w-full h-[60px] bg-[#FFFAFA] px-5">
               <Foundation name="key" size={24} color="#aaa" />
               <TextInput
-                onChangeText={(value) => setPassword(value)}
+                onChangeText={(value) => handleInputChange("password", value)}
                 className="w-full flex-1"
                 secureTextEntry={!showPassword}
                 placeholder="Enter your Password"

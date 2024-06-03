@@ -33,7 +33,7 @@ export default function Login() {
         text1: "You are now logged in your account",
       });
       setTimeout(() => {
-        router.push("/(main)/");
+        router.push("/driver/");
       }, 1000);
     } catch (error) {
       // Handle errors
@@ -77,7 +77,7 @@ export default function Login() {
           <TouchableOpacity
             disabled={isPending}
             // onPress={handleSignUp}
-            onPress={() => router.push("/driver/")}
+            onPress={() => router.push("/client/")}
             className="rounded-full bg-[#51259B] w-full h-[60px] items-center justify-center">
             <Text className="text-center text-white uppercase">{isPending ? "Please wait..." : "Login"} </Text>
           </TouchableOpacity>

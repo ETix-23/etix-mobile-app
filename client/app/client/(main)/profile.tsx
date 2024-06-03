@@ -21,7 +21,7 @@ const Profile = () => {
           <Text>{user?.email}</Text>
         </View>
       </View>
-      <Image source={require("../../assets/images/people-waving-hand-illustration.png")} className="w-full" />
+      <Image source={require("../../../assets/images/people-waving-hand-illustration.png")} className="w-full" />
     </SafeAreaView>
   );
 };

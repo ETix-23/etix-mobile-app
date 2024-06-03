@@ -44,7 +44,7 @@ export default function Register() {
       });
 
       setTimeout(() => {
-        router.push("/(main)/");
+        router.push("/client/");
       }, 1000);
     } catch (error: any) {
       if (error.response) {

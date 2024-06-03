@@ -58,7 +58,7 @@ const CompleteBooking = () => {
         <Text>Cost Per ticket is 1,500 RWF</Text>
         <Link
           href={{
-            pathname: "/book/payment/selectPayment",
+            pathname: "/client/book/payment/selectPayment",
             params: { ...params },
           }}
           asChild>

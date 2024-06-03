@@ -11,7 +11,6 @@ const CompletePayment = () => {
 
   const createTicket = async () => {
     try {
-
       const response = await axios.post("http://10.0.2.2:5000/api/tickets/new", {
         companyName: "Volcano",
         pickup: "Kigali",
@@ -22,7 +21,7 @@ const CompletePayment = () => {
       });
 
       if (response) {
-        router.push("/book/success");
+        router.push("/client/book/success");
       }
     } catch (error) {
       Toast.show({
@@ -59,7 +58,7 @@ const CompletePayment = () => {
           <View className="space-y-3">
             <Text>Card Number</Text>
             <View className="flex-row space-x-4 h-[60px] bg-[#F2F2F2] px-4 items-center rounded-xl">
-              <Image source={require("../../../assets/images/visa.png")} />
+              <Image source={require("../../../../assets/images/visa.png")} />
               <TextInput className="" placeholder="Enter card number" />
             </View>
           </View>

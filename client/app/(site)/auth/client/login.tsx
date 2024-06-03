@@ -40,7 +40,7 @@ export default function Login() {
         text1: "You are now logged in your account",
       });
       setTimeout(() => {
-        router.push("/(main)/");
+        router.push("/client/");
       }, 1000);
     } catch (error: any) {
       if (error.response) {

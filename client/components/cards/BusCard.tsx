@@ -35,7 +35,7 @@ const BusCard: React.FC<{ busData: Bus; params: any }> = ({ busData, params }) =
         </View>
         <Link
           href={{
-            pathname: `/book/bus/${busData.numberPlate}`,
+            pathname: `/client/book/bus/${busData.numberPlate}`,
             params: { ...params },
           }}
           asChild>

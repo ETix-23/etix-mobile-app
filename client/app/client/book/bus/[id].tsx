@@ -17,7 +17,7 @@ const BookBus = () => {
       <View className="flex-1 h-full justify-between">
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="flex-1 h-full">
-            <Image source={require("../../../assets/images/bus-image.png")} className="w-full h-[280px]" />
+            <Image source={require("../../../../assets/images/bus-image.png")} className="w-full h-[280px]" />
             <View className="flex-row justify-center">
               <View className="bg-[#51259B] w-full max-w-[200px] py-3 rounded-full -mt-6">
                 <Text className="text-white text-xl font-semibold text-center">Bus 3</Text>
@@ -79,7 +79,7 @@ const BookBus = () => {
           </View>
           <Link
             href={{
-              pathname: "/book/completeBooking",
+              pathname: "/client/book/completeBooking",
               params: { ...params },
             }}
             asChild>

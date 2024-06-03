@@ -23,7 +23,7 @@ const SearchPage = () => {
 
   return (
     <View className="flex-1 items-center pb-3 flex bg-white p-2">
-      <Image source={require("../../../assets/images/icons/etix.png")} style={{ width: 200, height: 160 }} />
+      <Image source={require("../../../../assets/images/icons/etix.png")} style={{ width: 200, height: 160 }} />
       <View className="space-y-2 items-center">
         <Text className="text-2xl font-semibold">Hello, Lucky.</Text>
         <Text className="text-base font-semibold">Looking for a bus?</Text>
@@ -87,7 +87,7 @@ const SearchPage = () => {
         </View>
         <Link
           href={{
-            pathname: "/search/results",
+            pathname: "/client/search/results",
             params: { from: formData.from, to: formData.to, numberOfSeats: formData.numberOfSeats, date: formData.date, time: formData.time },
           }}
           push

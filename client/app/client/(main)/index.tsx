@@ -11,7 +11,7 @@ const HomePage = () => {
     <SafeAreaView className="flex-1 justify-center items-center bg-white">
       <View className="items-center flex-1 space-y-10">
         <Text className="text-2xl font-semibold">Welcome {user?.name}</Text>
-        <Image source={require("../../assets/images/dummy-dashboard-data.png")} style={{ width: 380, height: 520 }} />
+        <Image source={require("../../../assets/images/dummy-dashboard-data.png")} style={{ width: 380, height: 520 }} />
       </View>
     </SafeAreaView>
   );

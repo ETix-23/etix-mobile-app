@@ -19,11 +19,6 @@ NativeWindStyleSheet.setOutput({
 
 export { ErrorBoundary } from "expo-router";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(site)",
-};
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -63,15 +58,14 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const { user, token } = useSelector(loggedInUser);
-  const isLoggedIn = user && token;
+  const isLoggedIn = Boolean(user && token);  
 
   return (
     // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
 
-    <Stack initialRouteName={isLoggedIn ? "(main)" : "(site)"}>
+    <Stack initialRouteName={isLoggedIn ? "client" : "(site)"}>
       <Stack.Screen name="(site)" options={{ headerShown: false }} />
-      <Stack.Screen name="(main)" options={{ headerShown: false }} />
-      <Stack.Screen name="book" options={{ headerShown: false }} />
+      <Stack.Screen name="client" options={{ headerShown: false }} />
       <Stack.Screen name="driver" options={{ headerShown: false }} />
       <Stack.Screen name="emergency" options={{ headerShown: false, presentation: "modal" }} />
     </Stack>

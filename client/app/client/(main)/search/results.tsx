@@ -9,12 +9,12 @@ const SearchResults = () => {
   const params = useLocalSearchParams();
   const formattedDate = formatDate(Number(params.date));
   if (!params.from || !params.to) {
-    router.push("/search/");
+    router.push("/client/search/");
   }
   return (
     <SafeAreaView className="flex-1 p-2">
       <View className="items-center">
-        <Image source={require("../../../assets/images/icons/etix.png")} style={{ width: 150, height: 120, marginTop: -100 }} />
+        <Image source={require("../../../../assets/images/icons/etix.png")} style={{ width: 150, height: 120, marginTop: -100 }} />
         <View className="w-full py-3">
           <View className="flex-row gap-3">
             <View className="bg-white flex-1 p-4 rounded-2xl space-y-2">

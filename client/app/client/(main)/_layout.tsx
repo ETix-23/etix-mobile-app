@@ -17,7 +17,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   const { user, token } = useSelector(loggedInUser) as UserState;
-  if (!user || !token) return router.push("/(site)");
+  if (!user || !token) return router.push("/");
 
   return (
     <Tabs

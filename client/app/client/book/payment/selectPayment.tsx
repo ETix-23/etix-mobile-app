@@ -39,7 +39,7 @@ const SelectPayment = () => {
                 <Text className="font-semibold text-lg text-[#6C6A6A]">Mobile Money</Text>
                 <Link
                   href={{
-                    pathname: "/book/payment/completePayment",
+                    pathname: "/client/book/payment/completePayment",
                     params: { ...params },
                   }}>
                   <Text className="text-[#51259B] uppercase">Select</Text>
@@ -56,7 +56,7 @@ const SelectPayment = () => {
               <Text className="font-semibold text-lg text-[#6C6A6A]">Credit Card </Text>
               <Link
                 href={{
-                  pathname: "/book/payment/completePayment",
+                  pathname: "/client/book/payment/completePayment",
                   params: { ...params },
                 }}>
                 <Text className="text-[#51259B] uppercase">Select</Text>
@@ -64,9 +64,9 @@ const SelectPayment = () => {
               </Link>
             </View>
             <View className="border-t border-[#A39D9D] pt-4 flex-row items-center space-x-3">
-              <Image source={require("../../../assets/images/mastercard.png")} />
-              <Image source={require("../../../assets/images/credit-card.png")} />
-              <Image source={require("../../../assets/images/visa.png")} />
+              <Image source={require("../../../../assets/images/mastercard.png")} />
+              <Image source={require("../../../../assets/images/credit-card.png")} />
+              <Image source={require("../../../../assets/images/visa.png")} />
             </View>
           </View>
           <View className="bg-white p-6 rounded-3xl space-y-4">
@@ -74,7 +74,7 @@ const SelectPayment = () => {
               <Text className="font-semibold text-lg text-[#6C6A6A]">Bank Transfer </Text>
               <Link
                 href={{
-                  pathname: "/book/payment/completePayment",
+                  pathname: "/client/book/payment/completePayment",
                   params: { ...params },
                 }}>
                 <Text className="text-[#51259B] uppercase">Select</Text>
@@ -82,8 +82,8 @@ const SelectPayment = () => {
               </Link>
             </View>
             <View className="border-t border-[#A39D9D] pt-4 flex-row items-center space-x-3">
-              <Image source={require("../../../assets/images/google-wallet.png")} />
-              <Image source={require("../../../assets/images/bank-cards.png")} />
+              <Image source={require("../../../../assets/images/google-wallet.png")} />
+              <Image source={require("../../../../assets/images/bank-cards.png")} />
             </View>
           </View>
         </View>

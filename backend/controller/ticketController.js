@@ -1,7 +1,8 @@
 const { Ticket } = require("../models/tickets.model");
 const Route = require("../models/routes.model");
 const moment = require("moment");
-const QRcode= require('qrcode')
+const QRcode = require('qrcode');
+const currencyConversionService = require('../services/currencyConversionService'); // This is a fictional service, you need to implement or use a real one
 
 async function publishTickets(req, res) {
   try {
@@ -10,10 +11,11 @@ async function publishTickets(req, res) {
       departureTime,
       arrivalTime,
       price,
-      
+      currency = 'USD',
       numberOfTickets,
       date,
     } = req.body;
+
     const tickets = [];
     const parsedDepartureTime = moment(departureTime, "h:mm A").toDate();
     const parsedArrivalTime = moment(arrivalTime, "h:mm A").toDate();
@@ -25,6 +27,7 @@ async function publishTickets(req, res) {
         departureTime: parsedDepartureTime,
         arrivalTime: parsedArrivalTime,
         price,
+        currency,
         date: parsedDate,
       });
       tickets.push(ticket);
@@ -51,12 +54,10 @@ async function getTicketsByRoute(req, res) {
 
 async function bookTicket(req, res) {
   try {
-    const { routeId, departureTime, arrivalTime, price } = req.body;
+    const { routeId, departureTime, arrivalTime, price, currency = 'USD' } = req.body;
     const parsedDepartureTime = moment(departureTime, "h:mm A").toDate();
     const parsedArrivalTime = moment(arrivalTime, "h:mm A").toDate();
     const route = await Route.findById(routeId);
-
-
 
     if (!route) {
       return res
@@ -72,35 +73,37 @@ async function bookTicket(req, res) {
        .json({ message: "No more tickets available" });
     }
 
+    // Convert price to the desired currency
+    const convertedPrice = await currencyConversionService.convert(price, currency);
+
     const ticket = new Ticket({
       user: req.user,
       route: routeId,
-      company:route.transportCompany,
+      company: route.transportCompany,
       departureTime: parsedDepartureTime,
       arrivalTime: parsedArrivalTime,
-      price,
+      price: convertedPrice,
+      currency,
     });
     console.log(ticket.user);
 
     await ticket.save();
 
-
     // Generating QR code with ticket details
-
-    const qrCodeData={
+    const qrCodeData = {
       user: ticket.user,
-      route:ticket.route,
-      company:ticket.company,
-      departureTime:ticket.departureTime,
-      arrivalTime:ticket.arrivalTime,
-      price:ticket.price,
-      date:ticket.date,
-      ticketId:ticket._id
-    }
-    const qrCodeUrl= await QRcode.toDataURL(JSON.stringify(qrCodeData))
-    
+      route: ticket.route,
+      company: ticket.company,
+      departureTime: ticket.departureTime,
+      arrivalTime: ticket.arrivalTime,
+      price: ticket.price,
+      currency: ticket.currency,
+      date: ticket.date,
+      ticketId: ticket._id
+    };
+    const qrCodeUrl = await QRcode.toDataURL(JSON.stringify(qrCodeData));
 
-    res.status(201).json({ ticket,qrCodeUrl });
+    res.status(201).json({ ticket, qrCodeUrl });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error!!!" });

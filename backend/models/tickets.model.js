@@ -17,6 +17,11 @@ const ticketSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  currency: {
+    type: String,
+    required: true,
+    default: 'RWF', // Default currency
+  },
   departureTime: {
     type: Date,
     required: true,

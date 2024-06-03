@@ -10,13 +10,26 @@ io.on('connection', (socket) => {
   });
 });
 
+exports.getAllBuses = async (req,res)=>{
+  try{
+
+    const buses = await Bus.find();
+    res.status(200).json({buses})
+  }
+  catch(err){
+      console.error(err)
+      res.status(500).json({error:"Internal Server Error"})
+  }
+}
+
+
 // Add a new bus
 exports.addBus = async (req, res) => {
   try {
-    const { name, routeId, numberOfSeats } = req.body;
+    const { company_id,plateNo, numberOfSeats } = req.body;
     const bus = new Bus({
-      name,
-      route: routeId,
+      company:company_id,
+      plateNo,
       numberOfSeats,
     });
     await bus.save();
@@ -31,11 +44,10 @@ exports.addBus = async (req, res) => {
 exports.updateBus = async (req, res) => {
   try {
     const { busId } = req.params;
-    const { name, routeId, numberOfSeats } = req.body;
+    const { plateNo} = req.body;
     const bus = await Bus.findByIdAndUpdate(busId, {
-      name,
-      route: routeId,
-      numberOfSeats,
+    
+      plateNo
     }, { new: true });
 
     if (!bus) {

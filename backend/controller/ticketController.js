@@ -98,8 +98,8 @@ async function bookTicket(req, res) {
       ticketId:ticket._id
     }
     const qrCodeUrl= await QRcode.toDataURL(JSON.stringify(qrCodeData))
-  
- 
+    
+
     res.status(201).json({ ticket,qrCodeUrl });
   } catch (error) {
     console.error(error);

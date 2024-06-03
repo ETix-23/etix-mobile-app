@@ -10,6 +10,10 @@ const busSchema = new mongoose.Schema({
  plateNo:{
   type:Number,
   required:true
+ },
+ numberOfSeats:{
+  type:Number,
+  required:true
  }
 });
 

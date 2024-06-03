@@ -9,13 +9,22 @@ const routeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  distance: {
-    type: String,
-   
+  departureTime: {
+    type: Date,
+    required: true,
   },
-  duration: {
+  arrivalTime: {
+    type: Date,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  currency: {
     type: String,
-  
+    required: true,
+    default: 'RWF', // Default currency
   },
   numberOfTickets: {
     type: Number,

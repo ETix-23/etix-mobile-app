@@ -1,6 +1,7 @@
 const Company = require("../models/company.model");
 const Route = require("../models/routes.model");
-
+const moment = require("moment");
+const currencyConversionService = require('../services/currencyConversionService'); // This is a fictional service, you need to implement or use a real one
 async function getRoutes(req, res) {
   try {
     const routes = await Route.find()
@@ -20,8 +21,29 @@ async function getRouteById(req,res){
   }
 }
 async function addRoute(req, res) {
+  
+
+
+   
   try {
-    const { origin, destination, distance, duration,numberOfTickets,companyId } = req.body;
+   
+    const { origin, 
+      destination,
+      numberOfTickets,
+      companyId,
+      departureTime,
+      arrivalTime,
+      price,
+      currency = 'USD',
+       } = req.body;
+
+       const parsedDepartureTime = moment(departureTime, "h:mm A").toDate();
+       const parsedArrivalTime = moment(arrivalTime, "h:mm A").toDate();
+
+        // Convert price to the desired currency
+       const convertedPrice = await currencyConversionService.convert(price, currency);
+
+
     const transportCompany= await Company.findById(companyId)
     if (!transportCompany) {
       return res
@@ -31,10 +53,13 @@ async function addRoute(req, res) {
     const route = new Route({
       origin,
       destination,
-      distance,
-      duration,
       numberOfTickets,
-      transportCompany
+      departureTime:parsedDepartureTime,
+      arrivalTime:parsedArrivalTime,
+      price:convertedPrice,
+      currency,
+      transportCompany:transportCompany._id,
+
 
     });
     await route.save();

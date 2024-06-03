@@ -1,24 +1,25 @@
 import API_BASE_URL from "@/api/endpoint";
+import { setUser } from "@/features/user.slice";
 import { Feather, Foundation, MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Stack, router } from "expo-router";
 import { useState } from "react";
 import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
   const [isPending, setIsPending] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleInputChange = (name: string, value: string) => {
     setFormData((prevFormData) => ({
@@ -31,6 +32,7 @@ export default function Login() {
     setIsPending(true);
     try {
       const response = await axios.post(API_BASE_URL + "/api/users/signin", formData);
+      dispatch(setUser(response.data));
 
       console.log("Response:", response.data);
       Toast.show({
@@ -68,7 +70,7 @@ export default function Login() {
         });
       }
     } finally {
-      setIsPending(false);
+      setIsPending(false);      
     }
   };
 

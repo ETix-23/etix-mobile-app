@@ -1,17 +1,17 @@
 import API_BASE_URL from "@/api/endpoint";
+import { setUser } from "@/features/user.slice";
 import { Feather, Foundation, MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { Stack, router } from "expo-router";
 import { useState } from "react";
 import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
+  const [isPending, setIsPending] = useState(false);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     names: "",
     phoneNumber: "",
@@ -19,7 +19,11 @@ export default function Register() {
     password: "",
   });
 
-  const [isPending, setIsPending] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+
 
   const handleInputChange = (name: string, value: string) => {
     setFormData((prevFormData) => ({
@@ -32,6 +36,7 @@ export default function Register() {
     setIsPending(true);
     try {
       const response = await axios.post(API_BASE_URL + "/api/users/signup", formData);
+      dispatch(setUser(response.data));
 
       Toast.show({
         type: "success",

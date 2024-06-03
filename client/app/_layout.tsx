@@ -1,5 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+// import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { store, persistor } from "@/store/store";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,15 +9,15 @@ import { useEffect } from "react";
 import { useColorScheme } from "@/components/useColorScheme";
 import { NativeWindStyleSheet } from "nativewind";
 import Toast from "react-native-toast-message";
+import { Provider, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { loggedInUser } from "@/features/user.slice";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
 });
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -49,25 +50,32 @@ export default function RootLayout() {
 
   return (
     <>
-      <RootLayoutNav />
-      <Toast />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <RootLayoutNav />
+        </PersistGate>
+        <Toast />
+      </Provider>
     </>
   );
 }
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const { user, token } = useSelector(loggedInUser);
+  const isLoggedIn = user && token;
 
   return (
     // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-    <Stack initialRouteName="(site)">
+
+    <Stack initialRouteName={isLoggedIn ? "(main)" : "(site)"}>
       <Stack.Screen name="(site)" options={{ headerShown: false }} />
       <Stack.Screen name="(main)" options={{ headerShown: false }} />
       <Stack.Screen name="book" options={{ headerShown: false }} />
       <Stack.Screen name="driver" options={{ headerShown: false }} />
       <Stack.Screen name="emergency" options={{ headerShown: false, presentation: "modal" }} />
-      {/* <Stack.Screen name="modal" options={{ presentation: 'modal' }} /> */}
     </Stack>
+
     // </ThemeProvider>
   );
 }

@@ -1,13 +1,13 @@
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import React from "react";
-
+import { AntDesign } from "@expo/vector-icons";
 import { Tabs, router } from "expo-router";
-
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 import { Feather } from "@expo/vector-icons";
 import { Platform, Text, View } from "react-native";
+import { useSelector } from "react-redux";
+import { loggedInUser } from "@/features/user.slice";
+import { UserState } from "@/types/user";
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof AntDesign>["name"]; color: string }) {
   return <AntDesign size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -15,6 +15,9 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof AntDesign>["name"
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  const { user, token } = useSelector(loggedInUser) as UserState;
+  if (!user || !token) return router.push("/(site)");
 
   return (
     <Tabs

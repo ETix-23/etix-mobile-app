@@ -31,8 +31,8 @@ const routeSchema = new mongoose.Schema({
     required: true,
   },
   transportCompany:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"Company",
+    type:String,
+    required: true,
   }
 
 

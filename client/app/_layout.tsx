@@ -57,13 +57,11 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const { user, token } = useSelector(loggedInUser);
-  const isLoggedIn = Boolean(user && token);  
-
+  
   return (
     // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
 
-    <Stack initialRouteName={isLoggedIn ? "client" : "(site)"}>
+    <Stack initialRouteName={"client"}>
       <Stack.Screen name="(site)" options={{ headerShown: false }} />
       <Stack.Screen name="client" options={{ headerShown: false }} />
       <Stack.Screen name="driver" options={{ headerShown: false }} />

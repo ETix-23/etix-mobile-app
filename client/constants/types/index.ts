@@ -1,13 +1,13 @@
 export type Bus = {
-  company: string;
-  numberPlate: string;
-  busStops: Array<BusStop>;
+  _id: string;
+  origin: string;
+  destination: string;
+  departureTime: Date;
+  arrivalTime: Date;
   price: number;
-};
-
-type BusStop = {
-  arrivalTime: string;
-  name: string;
+  currency: string;
+  numberOfTickets: number;
+  transportCompany: string;
 };
 
 export interface Schedule {

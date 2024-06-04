@@ -1,9 +1,12 @@
+import { loggedInUser } from "@/features/user.slice";
 import { formatDate, formatTime } from "@/utils/formatDateTime";
 import { AntDesign, Entypo, Feather, FontAwesome6 } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
 const SearchPage = () => {
+  const { user } = useSelector(loggedInUser);
   const [formData, setFormData] = useState({
     from: "",
     to: "",
@@ -11,6 +14,7 @@ const SearchPage = () => {
     date: Date.now(),
     time: Date.now(),
   });
+  
   const handleInputChange = (name: string, value: string | number) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -25,7 +29,7 @@ const SearchPage = () => {
     <View className="flex-1 items-center pb-3 flex bg-white p-2">
       <Image source={require("../../../../assets/images/icons/etix.png")} style={{ width: 200, height: 160 }} />
       <View className="space-y-2 items-center">
-        <Text className="text-2xl font-semibold">Hello, Lucky.</Text>
+        <Text className="text-2xl font-semibold">Hello, {user?.name}</Text>
         <Text className="text-base font-semibold">Looking for a bus?</Text>
       </View>
       {/* <Image source={require("../../assets/images/bus-stop-illustration.png")} style={{ width: 220, height: 160 }} /> */}

@@ -7,9 +7,12 @@ import { Feather, FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 const BookBus = () => {
   const params = useLocalSearchParams();
   const bus: Bus = busData.filter((b) => b.numberPlate === params.id)[0];
+
+  // useEffect(() =>)
 
   return (
     <SafeAreaView className="flex-1">

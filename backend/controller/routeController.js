@@ -58,10 +58,12 @@ async function addRoute(req, res) {
       arrivalTime:parsedArrivalTime,
       price:convertedPrice,
       currency,
-      transportCompany:transportCompany.name,
+      transportCompany:transportCompany,
 
 
     });
+
+    
     await route.save();
     res.status(201).json({ message: "Route added successfully",route });
   } catch (error) {

@@ -10,6 +10,17 @@ async function getCompanies(req,res){
   }
 }
 
+async function getCompanyById(req,res){
+  const {id}= req.params
+  try{
+    const company = await Company.findById(id)
+    res.status(200).json({company})
+  }catch(error){
+    res.status(500).json({error:"Internal Server Error!!!"})
+  }
+}
+
+
 async function addCompany(req,res){
     try{
       const {name,description} = req.body
@@ -24,4 +35,5 @@ async function addCompany(req,res){
 module.exports = {
     getCompanies,
     addCompany,
+    getCompanyById
 }

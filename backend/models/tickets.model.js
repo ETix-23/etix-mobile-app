@@ -5,17 +5,11 @@ const ticketSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  company: {
+  bus: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
+    ref: "Bus",
   },
-  route: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Route",
-  },
-  date: {
-    type: Date,
-  },
+ 
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);

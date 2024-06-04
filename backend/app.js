@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
-const transportRoutes = require("./routes/route");
 const companyRoutes = require("./routes/companyRoutes");
 const busRoutes = require("./routes/busRoutes");
 const swaggerUi = require("swagger-ui-express");
@@ -45,6 +44,8 @@ const ROLES = {
 
 app.use("/api/users", authRoutes);
 app.use("/api/tickets", ticketRoutes);
-app.use("/api/routes", transportRoutes);
-app.use("/api/buses", authorizeRoles(ROLES.ENTITY_MANAGER), busRoutes);
-app.use("/api/companies",authorizeRoles(ROLES.ENTITY_MANAGER), companyRoutes);
+app.use("/api/buses", busRoutes);
+app.use("/api/companies", companyRoutes);
+
+
+

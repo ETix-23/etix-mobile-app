@@ -1,20 +1,40 @@
 const mongoose = require('mongoose');
 
 const busSchema = new mongoose.Schema({
+
  
-  company:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
-    required:true
+  origin: {
+    type: String,
+    required: true,
+  },
+  destination: {
+    type: String,
+    required: true,
+  },
+  departureTime: {
+    type: Date,
+    required: true,
+  },
+  arrivalTime: {
+    type: Date,
+    required: true,
   },
  plateNo:{
-  type:Number,
+  type:String,
   required:true
  },
- numberOfSeats:{
-  type:Number,
-  required:true
- }
+ numberOfTickets: {
+  type: Number,
+  required: true,
+},
+price: {
+  type: Number,
+  required: true,
+},
+transportCompany:{
+  type:mongoose.Schema.Types.ObjectId,
+  ref:"Company",
+}
 });
 
 const Bus=mongoose.model('Bus', busSchema);

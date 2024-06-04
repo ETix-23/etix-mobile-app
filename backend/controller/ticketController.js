@@ -1,5 +1,5 @@
 const { Ticket } = require("../models/tickets.model");
-const Route = require("../models/routes.model");
+const Bus = require("../models/bus");
 
 const QRcode = require('qrcode');
 
@@ -44,18 +44,18 @@ async function getTicketsByRoute(req, res) {
 
 async function bookTicket(req, res) {
   try {
-    const { routeId,  price, currency = 'USD' } = req.body;
-    const route = await Route.findById(routeId);
+    const { busId } = req.body;
+    const bus = await Bus.findById(busId);
 
-    if (!route) {
+    if (!bus) {
       return res
         .status(400)
-        .json({ message: "Route not found" });
+        .json({ message: "BUs not found" });
     }
 
-    const numberOfTickets = await Ticket.find({ route: routeId }).countDocuments();
+    const numberOfTickets = await Ticket.find({ bus: busId }).countDocuments();
 
-    if (numberOfTickets >= route.numberOfTickets) {
+    if (numberOfTickets >= bus.numberOfTickets) {
       return res
        .status(400)
        .json({ message: "No more tickets available" });
@@ -64,8 +64,7 @@ async function bookTicket(req, res) {
 
     const ticket = new Ticket({
       user: req.user,
-      route: routeId,
-      company: route.transportCompany,
+      bus:bus
       
     });
     console.log(ticket.user);

@@ -58,7 +58,7 @@ async function addRoute(req, res) {
       arrivalTime:parsedArrivalTime,
       price:convertedPrice,
       currency,
-      transportCompany:transportCompany._id,
+      transportCompany:transportCompany.name,
 
 
     });

@@ -7,9 +7,13 @@ export type Bus = {
   price: number;
   currency: string;
   numberOfTickets: number;
-  transportCompany: string;
+  transportCompany: Company;
 };
 
+type Company {
+  name : string;
+  description : string;
+}
 export interface Schedule {
   time: string;
   task: {

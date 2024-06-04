@@ -9,7 +9,7 @@ const BusCard: React.FC<{ busData: Bus; params: any }> = ({ busData, params }) =
     <View className="bg-white rounded-2xl shadow-md shadow-[#adadad] p-4">
       <View>
         <View className="flex-row justify-between items-center py-4 px-3">
-          <Text className="text-[#51259B] text-3xl font-semibold">{transportCompany}</Text>
+          <Text className="text-[#51259B] text-3xl font-semibold">{transportCompany.name}</Text>
           <View className="flex-row items-center gap-x-2 bg-[#eee] p-1 pr-2 rounded-full">
             <Text className="text-[#aaa]">Plate Number : </Text>
             {/* <Text className="text-[#A39D9D] font-semibold text-base">{numberPlate}</Text> */}

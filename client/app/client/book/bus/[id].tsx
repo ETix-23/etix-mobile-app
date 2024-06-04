@@ -7,12 +7,25 @@ import { Feather, FontAwesome6 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import API_BASE_URL from "@/api/endpoint";
+import axios from "axios";
 const BookBus = () => {
   const params = useLocalSearchParams();
-  const bus: Bus = busData.filter((b) => b.numberPlate === params.id)[0];
+  const [searchResults, setSearchResults] = useState<Bus | null>(null);
+  // const bus: Bus = busData.filter((b) => b. === params.id)[0];
 
-  // useEffect(() =>)
+  const fetchData = () => {
+    axios
+      .get(API_BASE_URL + `/api/routes/search/${params._id}`)
+      .then((response) => setSearchResults(response.data.routes))
+      .catch((error) => console.log(error.message));
+  };
+  console.log(searchResults);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView className="flex-1">
@@ -30,13 +43,13 @@ const BookBus = () => {
               <View className="bg-white p-4 rounded-2xl w-full">
                 <Text className="px-2 pt-6">{formatDate(Number(params.date))}</Text>
                 <View className="w-full bg-[#50259b11] backdrop-blur-3xl p-6 rounded-2xl mt-4 shadow-lg">
-                  <Text className="text-lg font-semibold text-[#4F4D4D] text-center">Plate No. {bus.numberPlate}</Text>
+                  <Text className="text-lg font-semibold text-[#4F4D4D] text-center">Plate No. {searchResults?._id}</Text>
                   <View className="p-2 flex-row justify-between">
                     <View className="space-y-1">
-                      <Text className="text-[#51259B] text-lg">Kigali</Text>
+                      <Text className="text-[#51259B] text-lg">{searchResults?.origin}</Text>
                     </View>
                     <View className="space-y-1 items-end">
-                      <Text className="text-[#51259B] text-lg">Musanze</Text>
+                      <Text className="text-[#51259B] text-lg">{searchResults?.destination}</Text>
                     </View>
                   </View>
                   <View className="flex-row items-center justify-between gap-4">
@@ -77,8 +90,8 @@ const BookBus = () => {
         </ScrollView>
         <View className="bg-white flex-row justify-between p-6 border-t border-[#dbdbdb]">
           <View>
-            <Text className="text-[#a3a3a3] font-semibold">1 * {1500} RWF</Text>
-            <Text className="text-[#403F3F] font-semibold text-xl">{Number(params.numberOfSeats) * 1500} RWF</Text>
+            <Text className="text-[#a3a3a3] font-semibold">1 * {searchResults?.price} RWF</Text>
+            <Text className="text-[#403F3F] font-semibold text-xl">{Number(searchResults?.numberOfTickets) * searchResults?.price} RWF</Text>
           </View>
           <Link
             href={{
